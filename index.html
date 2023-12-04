@@ -141,19 +141,10 @@
     <div class="name-selector" onclick="showInfo('Акбота')">Акбота</div>
     <div class="name-selector" onclick="showInfo('Али')">Али</div>
     <div class="name-selector" onclick="showInfo('Алемжан')">Алемжан</div>
-
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+    
     <script>
-        // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-        import firebase from 'firebase/app';
-        import 'firebase/firestore';
 
         // Замените настройки конфигурации вашими данными из Firebase
         const firebaseConfig = {
@@ -165,46 +156,11 @@
             appId: "1:53262494066:web:a8c1f8fa1c0db256d415eb"
           };
 
-        // Инициализация Firebase
+   
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-
-        // Создайте ссылку на коллекцию Firestore
         const db = firebase.firestore();
 
-        // Обновите функции сохранения и загрузки данных
-        async function saveInfo(username) {
-            var editedInfo = document.getElementById("editInfo").value;
-
-            try {
-                // Сохранение данных в Firestore
-                await db.collection('nameInfo').doc(username).set({
-                    info: editedInfo,
-                });
-
-                alert("Информация сохранена: " + editedInfo);
-            } catch (error) {
-                console.error("Ошибка сохранения информации:", error);
-                alert("Ошибка сохранения информации. Пожалуйста, попробуйте еще раз.");
-            }
-        }
-
-        async function showInfo(name) {
-            try {
-                // Получение данных из Firestore
-                const doc = await db.collection('nameInfo').doc(name).get();
-
-                if (doc.exists) {
-                    var infoContainer = document.getElementById("info-container");
-                    infoContainer.style.display = "block";
-                    infoContainer.innerHTML = '<strong>' + name + '</strong>: ' + doc.data().info;
-                } else {
-                    alert("Нет информации");
-                }
-            } catch (error) {
-                console.error("Ошибка получения информации:", error);
-                alert("Ошибка получения информации. Пожалуйста, попробуйте еще раз.");
-            }
-        }
         var loggedInUser = null;
 
         // Пароли для каждого пользователя
