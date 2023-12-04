@@ -141,26 +141,8 @@
     <div class="name-selector" onclick="showInfo('Акбота')">Акбота</div>
     <div class="name-selector" onclick="showInfo('Али')">Али</div>
     <div class="name-selector" onclick="showInfo('Алемжан')">Алемжан</div>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
-    
+
     <script>
-
-        // Замените настройки конфигурации вашими данными из Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyC4ntbB82v-XkEJzgjlO2lUWiFnQQ1qW_k",
-            authDomain: "secret-santa-12936.firebaseapp.com",
-            projectId: "secret-santa-12936",
-            storageBucket: "secret-santa-12936.appspot.com",
-            messagingSenderId: "53262494066",
-            appId: "1:53262494066:web:a8c1f8fa1c0db256d415eb"
-          };
-
-   
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
         var loggedInUser = null;
 
         // Пароли для каждого пользователя
@@ -254,4 +236,5 @@
     </script>
 </body>
 </html>
+
 
