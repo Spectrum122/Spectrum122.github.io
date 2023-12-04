@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecretSanta</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #c62828; /* Цвет фона заголовка */
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #ef5350; /* Цвет фона навигации */
+            padding: 10px;
+        }
+
+        .name-selector {
+            padding: 10px;
+            margin: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .name-selector:hover {
+            background-color: #f0f0f0;
+        }
+
+        #info-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        #login-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .new-year-design {
+            text-align: center;
+            padding: 20px;
+            background-color: #c62828; /* Цвет фона окошка */
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Адаптивные стили для маленьких экранов */
+        @media only screen and (max-width: 600px) {
+            #info-container, #login-container, .new-year-design {
+                margin: 10px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SecretSanta</h1>
+        <nav>
+            <a href="#" onclick="showLogin()">Login</a>
+        </nav>
+    </header>
+
+    <div id="info-container">
+        <!-- Здесь будет отображаться информация о выбранном имени -->
+    </div>
+
+    <div id="login-container">
+        <label for="username">Username:</label>
+        <input type="text" id="username">
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password">
+        <br>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div class="new-year-design">
+        <h2>New Year's Greetings!</h2>
+        <p>Spread the joy of the season with Secret Santa. Click on the names to reveal special messages!</p>
+    </div>
+    <div class="name-selector" onclick="showInfo('Рауза')">Рауза</div>
+    <div class="name-selector" onclick="showInfo('Инкара')">Инкара</div>
+    <div class="name-selector" onclick="showInfo('Дамир')">Дамир</div>
+    <div class="name-selector" onclick="showInfo('Уаис')">Уаис</div>
+    <div class="name-selector" onclick="showInfo('Жанторе')">Жанторе</div>
+    <div class="name-selector" onclick="showInfo('Нурмух')">Нурмух</div>
+    <div class="name-selector" onclick="showInfo('Ермух')">Ермух</div>
+    <div class="name-selector" onclick="showInfo('Айым')">Айым</div>
+    <div class="name-selector" onclick="showInfo('Райана')">Райана</div>
+    <div class="name-selector" onclick="showInfo('Чина')">Чина</div>
+    <div class="name-selector" onclick="showInfo('Ануар')">Ануар</div>
+    <div class="name-selector" onclick="showInfo('Димаш Т')">Димаш Т</div>
+    <div class="name-selector" onclick="showInfo('Димаш А')">Димаш А</div>
+    <div class="name-selector" onclick="showInfo('Айлана')">Айлана</div>
+    <div class="name-selector" onclick="showInfo('Алан')">Алан</div>
+    <div class="name-selector" onclick="showInfo('Каусар')">Каусар</div>
+    <div class="name-selector" onclick="showInfo('Дария')">Дария</div>
+    <div class="name-selector" onclick="showInfo('Арнай')">Арнай</div>
+    <div class="name-selector" onclick="showInfo('Расул')">Расул</div>
+    <div class="name-selector" onclick="showInfo('Бекболат')">Бекболат</div>
+    <div class="name-selector" onclick="showInfo('Айша')">Айша</div>
+    <div class="name-selector" onclick="showInfo('Ансар')">Ансар</div>
+    <div class="name-selector" onclick="showInfo('Акбота')">Акбота</div>
+    <div class="name-selector" onclick="showInfo('Али')">Али</div>
+    <div class="name-selector" onclick="showInfo('Алемжан')">Алемжан</div>
+
+    <script>
+        var loggedInUser = null;
+
+        // Пароли для каждого пользователя
+        var passwords = {
+            'Рауза': '123456',
+            'Инкара': '234567',
+            'Дамир': '345678',
+            'Уаис': '456789',
+            'Жанторе': '567890',
+            'Нурмух': '678901',
+            'Ермух': '789012',
+            'Айым': '890123',
+            'Райана': '901234',
+            'Чина': '012345',
+            'Ануар': '135790',
+            'Димаш Т': '246801',
+            'Димаш А': '357912',
+            'Айлана': '468123',
+            'Алан': '579234',
+            'Каусар': '690345',
+            'Дария': '901456',
+            'Арнай': '012567',
+            'Расул': '123678',
+            'Бекболат': '234789',
+            'Айша': '345890',
+            'Ансар': '456901',
+            'Акбота': '567012',
+            'Али': '678123',
+            'Алемжан': '789234'
+        };
+
+        function showLogin() {
+            document.getElementById("login-container").style.display = "block";
+        }
+
+        function login() {
+            var usernameInput = document.getElementById("username");
+            var passwordInput = document.getElementById("password");
+            var username = usernameInput.value;
+            var password = passwordInput.value;
+
+            // Проверка логина и пароля
+            if (passwords.hasOwnProperty(username) && passwords[username] === password) {
+                loggedInUser = username;
+                document.getElementById("login-container").style.display = "none";
+                showInfo(username);
+            } else {
+                alert("Invalid username or password. Please try again.");
+            }
+        }
+
+        function showInfo(name) {
+            var infoContainer = document.getElementById("info-container");
+            infoContainer.style.display = "block";
+
+            // Создаем пользователя, если его нет в Local Storage
+            if (!nameInfo.hasOwnProperty(name)) {
+                nameInfo[name] = "Нет информации";
+            }
+
+            // Проверка, что пользователь залогинился и его имя совпадает с выбранным именем
+            if (loggedInUser) {
+                // Редактируемая информация для пользователя
+                var editableInfo = nameInfo[loggedInUser] || "Нет информации";
+                var isEditable = loggedInUser === name;
+
+                // Отображаем информацию и добавляем возможность редактирования
+                infoContainer.innerHTML = '<strong>' + name + '</strong>: ' +
+                    (isEditable ? '<br><textarea id="editInfo">' + editableInfo + '</textarea>' +
+                    '<br><button onclick="saveInfo(\'' + loggedInUser + '\')">Сохранить</button>' :
+                    editableInfo);
+            } else {
+                // Информация для просмотра других пользователей
+                var nameInfoText = nameInfo[name];
+                infoContainer.innerHTML = '<strong>' + name + '</strong>: ' + nameInfoText;
+            }
+        }
+
+        function saveInfo(username) {
+            var editedInfo = document.getElementById("editInfo").value;
+            nameInfo[username] = editedInfo;
+
+            // Сохраняем информацию в Local Storage
+            localStorage.setItem("nameInfo", JSON.stringify(nameInfo));
+
+            alert("Информация сохранена: " + editedInfo);
+        }
+
+        // Получаем информацию из Local Storage при загрузке страницы
+        var nameInfo = JSON.parse(localStorage.getItem("nameInfo")) || {};
+    </script>
+</body>
+</html>
+
