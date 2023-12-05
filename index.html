@@ -141,10 +141,21 @@
     <div class="name-selector" onclick="showInfo('Акбота')">Акбота</div>
     <div class="name-selector" onclick="showInfo('Али')">Али</div>
     <div class="name-selector" onclick="showInfo('Алемжан')">Алемжан</div>
-
+    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-database-compat.js"></script>
+    
+   
     <script>
         var loggedInUser = null;
-
+     const firebaseConfig = {
+  apiKey: "AIzaSyC4ntbB82v-XkEJzgjlO2lUWiFnQQ1qW_k",
+  authDomain: "secret-santa-12936.firebaseapp.com",
+  databaseURL: "https://secret-santa-12936-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "secret-santa-12936",
+  storageBucket: "secret-santa-12936.appspot.com",
+  messagingSenderId: "53262494066",
+  appId: "1:53262494066:web:a8c1f8fa1c0db256d415eb"
+};
         // Пароли для каждого пользователя
         var passwords = {
             'Рауза': '123456',
@@ -174,6 +185,8 @@
             'Алемжан': '789234'
         };
 
+        firebase.initializeApp(firebaseConfig);
+
         function showLogin() {
             document.getElementById("login-container").style.display = "block";
         }
@@ -198,41 +211,36 @@
             var infoContainer = document.getElementById("info-container");
             infoContainer.style.display = "block";
 
-            // Создаем пользователя, если его нет в Local Storage
-            if (!nameInfo.hasOwnProperty(name)) {
-                nameInfo[name] = "Нет информации";
-            }
-
-            // Проверка, что пользователь залогинился и его имя совпадает с выбранным именем
-            if (loggedInUser) {
-                // Редактируемая информация для пользователя
-                var editableInfo = nameInfo[loggedInUser] || "Нет информации";
-                var isEditable = loggedInUser === name;
+            const userRef = firebase.database().ref('users/' + name);
+            userRef.once('value').then((snapshot) => {
+                const userInfo = snapshot.val();
+                const editableInfo = userInfo ? userInfo.editedInfo || "Нет информации" : "Нет информации";
+                const isEditable = loggedInUser === name;
 
                 // Отображаем информацию и добавляем возможность редактирования
                 infoContainer.innerHTML = '<strong>' + name + '</strong>: ' +
+                    '<br><div id="infoText">' + editableInfo + '</div>' +
                     (isEditable ? '<br><textarea id="editInfo">' + editableInfo + '</textarea>' +
                     '<br><button onclick="saveInfo(\'' + loggedInUser + '\')">Сохранить</button>' :
-                    editableInfo);
-            } else {
-                // Информация для просмотра других пользователей
-                var nameInfoText = nameInfo[name];
-                infoContainer.innerHTML = '<strong>' + name + '</strong>: ' + nameInfoText;
-            }
+                    '');
+            }).catch((error) => {
+                console.error('Ошибка при получении информации:', error);
+            });
         }
 
-        function saveInfo(username) {
+        function saveInfo(name) {
             var editedInfo = document.getElementById("editInfo").value;
-            nameInfo[username] = editedInfo;
+            const userRef = firebase.database().ref('users/' + name);
 
-            // Сохраняем информацию в Local Storage
-            localStorage.setItem("nameInfo", JSON.stringify(nameInfo));
-
-            alert("Информация сохранена: " + editedInfo);
+            userRef.update({
+                editedInfo: editedInfo
+            }).then(() => {
+                alert("Информация сохранена: " + editedInfo);
+                document.getElementById("infoText").innerText = editedInfo;
+            }).catch((error) => {
+                console.error('Ошибка при сохранении информации:', error);
+            });
         }
-
-        // Получаем информацию из Local Storage при загрузке страницы
-        var nameInfo = JSON.parse(localStorage.getItem("nameInfo")) || {};
     </script>
 </body>
 </html>
