@@ -92,29 +92,16 @@
 </head>
 <body>
     <header>
-        <h1>SecretSanta</h1>
-        <nav>
-            <a href="#" onclick="showLogin()">Login</a>
-        </nav>
+        <h1>SecretSantа</h1>
     </header>
 
     <div id="info-container">
         <!-- Здесь будет отображаться информация о выбранном имени -->
     </div>
 
-    <div id="login-container">
-        <label for="username">Username:</label>
-        <input type="text" id="username">
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password">
-        <br>
-        <button onclick="login()">Login</button>
-    </div>
-
     <div class="new-year-design">
-        <h2>New Year's Greetings!</h2>
-        <p>Spread the joy of the season with Secret Santa. Click on the names to reveal special messages!</p>
+        <h2>Васап хоумис с днем тайного санты</h2>
+        <p>Поезд ушел братья мои</p>
     </div>
     <div class="name-selector" onclick="showInfo('Рауза')">Рауза</div>
     <div class="name-selector" onclick="showInfo('Инкара')">Инкара</div>
@@ -160,56 +147,8 @@
   appId: "1:53262494066:web:a8c1f8fa1c0db256d415eb"
 };
         // Пароли для каждого пользователя
-        var passwords = {
-            'Рауза': '123456',
-            'Инкара': '234567',
-            'Дамир': '345678',
-            'Уаис': '456789',
-            'Жанторе': '567890',
-            'Нурмух': '678901',
-            'Ермух': '789012',
-            'Айым': '890123',
-            'Райана': '901234',
-            'Чина': '012345',
-            'Ануар': '135790',
-            'Димаш Т': '246801',
-            'Димаш А': '357912',
-            'Айлана': '468123',
-            'Алан': '579234',
-            'Каусар': '690345',
-            'Дария': '901456',
-            'Арнай': '012567',
-            'Расул': '123678',
-            'Бекболат': '234789',
-            'Айша': '345890',
-            'Ансар': '456901',
-            'Акбота': '567012',
-            'Али': '678123',
-            'Алемжан': '789234',
-            'Баян': '000001'
-        };
-
         firebase.initializeApp(firebaseConfig);
 
-        function showLogin() {
-            document.getElementById("login-container").style.display = "block";
-        }
-
-        function login() {
-            var usernameInput = document.getElementById("username");
-            var passwordInput = document.getElementById("password");
-            var username = usernameInput.value;
-            var password = passwordInput.value;
-
-            // Проверка логина и пароля
-            if (passwords.hasOwnProperty(username) && passwords[username] === password) {
-                loggedInUser = username;
-                document.getElementById("login-container").style.display = "none";
-                showInfo(username);
-            } else {
-                alert("Invalid username or password. Please try again.");
-            }
-        }
 
         function showInfo(name) {
             var infoContainer = document.getElementById("info-container");
